@@ -1,4 +1,20 @@
-# vlm_checker：3D 实例分割质量校验闭环
+# Cascade-QC-3DGS：3D 实例分割质量校验闭环
+
+> **English** · Cascaded quality verification of instance segmentation for 3D reconstruction.
+> Promptable segmenters (e.g., SAM 2) produce defective masks—debris (dirty), fragmentation
+> (split), merging (sticky)—that corrupt downstream 3D Gaussian Splatting. This project is a
+> cascaded checker that routes each instance from zero-cost pixel rules, to cross-view
+> geometric arbitration, to a VLM semantic layer, and safely repairs flagged masks behind a
+> confidence fuse. It types defects at **90%+ accuracy on 570+ instances across three BOP
+> datasets** (YCB-V / LINEMOD-O / T-LESS) while invoking cross-view computation for only
+> ~35% of instances, recalls **0.88–0.93** of severe natural (non-injected) defects on
+> held-out scenes, and closes the loop with measured reconstruction gains on real 3DGS
+> (12 scenes, 20.17 dB PSNR). We also show that VLMs have a structural blind spot for
+> sticky defects (0/10) that a second view largely rescues (89.5%), and that random
+> single-view defects are absorbed by multi-view fusion (−0.17 dB) while systematic
+> split costs 2.2 dB—exactly the class our cascade detects best.
+> **Pipeline**: rule-based single-frame checks → cross-view re-projection → VLM review →
+> fuse-gated repair → 3DGS verification. 中文说明见下文。
 
 用 **VLM（Kimi K3）+ 确定性几何规则 + 跨视图一致性** 自动检测实例分割 mask 的缺陷
 （干净 / 杂块 dirty / 分裂 split / 粘连 sticky），并验证
