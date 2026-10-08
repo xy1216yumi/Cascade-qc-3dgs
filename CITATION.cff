@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Cascade-QC-3DGS: Cascaded VLM-Geometric Quality Verification of Instance Segmentation for 3D Reconstruction"
+authors:
+  - family-names: ""
+    given-names: ""
+    alias: "xy1216yumi"
+type: software
+url: "https://github.com/xy1216yumi/Cascade-qc-3dgs"
+notes: "Experimental codebase for a paper submitted to Computational Visual Media (CVM), under review."
+keywords:
+  - instance segmentation
+  - quality verification
+  - vision-language models
+  - multi-view geometry
+  - 3D Gaussian Splatting
+license: MIT

@@ -20,6 +20,34 @@
 （干净 / 杂块 dirty / 分裂 split / 粘连 sticky），并验证
 "检测出缺陷 → 触发重分割 → 提升 3D 重建质量"的闭环。本项目是一篇论文的实验代码库。
 
+## 结果速览（Results at a Glance）
+
+| 级联调度架构 | 缺陷修复前后（物体级 3DGS） |
+|---|---|
+| ![architecture](figures/fig3_architecture.jpg) | ![motivation](figures/fig1_motivation.jpg) |
+
+- 级联 90%+ 缺陷分型 @ 35% 跨视图算力（YCB-V/LMO/T-LESS 三数据集，570+ 实例）
+- 真实缺陷（非注入）高召回粗筛 R=0.88–0.93，几何∧VLM 复核精确率 93%
+- 置信度保险丝 100% 拦截有害修复；随机缺陷被多视图容忍（−0.17dB），系统性分裂 −2.2dB
+
+## Quickstart（2 分钟跑通核心检测器）
+
+```bash
+pip install -r requirements.txt
+
+# 合成测试集上跑几何规则检测器（38 实例，预期 100% 检出）
+python geo_checker.py --input data/test_images --masks data/test_masks \
+    --objects data/test_objects --output results/geo_results.jsonl
+python evaluate.py --answers results/test_answers.csv --predictions results/geo_results.jsonl
+
+# 跨视图 + 级联调度（需要 BOP 数据集，见下方"数据获取与复现"）
+python mv_eval_all.py --scene-dir data/real_data/test --pairs 3
+python cascade_eval_all.py --scene-dir data/real_data/test --pairs 3
+
+# VLM 质检（需 .env 中配置 Kimi API Key）
+python checker.py data/sample/image_01.png
+```
+
 ## 目录结构
 
 ```
