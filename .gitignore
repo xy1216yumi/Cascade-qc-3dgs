@@ -1,0 +1,41 @@
+# ===== 密钥与私钥（绝不提交）=====
+.env
+root_public_key.txt
+
+# ===== 论文文稿（按用户要求不公开）=====
+docs/
+
+# ===== Python 缓存 =====
+__pycache__/
+*.pyc
+
+# ===== 临时与归档 =====
+_archive/
+_cloud_pack/
+
+# ===== 大文件：原始数据集与压缩包（README 有获取方式）=====
+data/real_data/
+data/real_data_lmo/
+data/real_data_tless/
+data/*.zip
+cloud/*.zip
+obj_masks.zip
+obj_masks_sys.zip
+
+# ===== 渲染输出（可重新训练生成，>600MB）=====
+results/render_output/
+
+# ===== 训练/运行日志 =====
+output/
+*.log
+
+# ===== 系统文件 =====
+Thumbs.db
+.DS_Store
+
+# 第三方二进制（云端环境产物，非项目代码）
+*.whl
+micromamba.tar.bz2
+setup_env.sh
+setup_env2.sh
+setup_env3.sh

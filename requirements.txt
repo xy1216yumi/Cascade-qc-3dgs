@@ -1,0 +1,6 @@
+# VLM 检查器依赖（langchain_env 已全部满足，仅换环境时需要）
+langchain-openai>=1.3.5
+langchain-core>=1.4
+openai>=2.45
+pydantic>=2.12
+python-dotenv>=1.1

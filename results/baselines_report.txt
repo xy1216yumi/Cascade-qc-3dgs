@@ -1,0 +1,14 @@
+设置 1：注入缺陷检出（160 实例，12 场景 × ≤3 帧对）
+基线                       AUC oracle 阈值最佳准确率
+area_consistency       0.832        77.2%（n=149）
+boundary_gradient      0.582        67.5%（n=160）
+solidity               0.849        82.5%（n=160）
+
+对照（同数据，引自 results/mv_all_report.txt / cascade_all_report.txt）：
+  跨视图-only 75.0% | 级联 90.0%（跨视图调用率 35.6%）
+
+设置 2：真实 SAM2 mask 质量预测（53 实例，低质=IoU<0.8，低质占比 13.2%）
+方法                       AUC       准确率
+sam2_self_score        0.944     90.6%（oracle 阈值）
+iou_gap                0.761     86.8%（oracle 阈值）
+级联调度（无阈值）                  —     81.1%

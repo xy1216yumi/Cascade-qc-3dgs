@@ -1,0 +1,23 @@
+跨视图一致性检查器评估报告
+场景: real_data/test/000048 | 阈值: 0.7 | 可见性容差: 30.0mm
+准确率: 16/20 = 80.0%
+1->1024 实例0 [clean] score=0.913 pred=一致 gt=一致
+1->1024 实例1 [split] score=0.616 pred=冲突 gt=冲突
+1->1024 实例2 [dirty] score=0.830 pred=一致 gt=冲突
+1->1024 实例3 [sticky] score=0.224 pred=冲突 gt=冲突
+1->1024 实例4 [clean] score=0.764 pred=一致 gt=一致
+1->1059 实例0 [clean] score=0.906 pred=一致 gt=一致
+1->1059 实例1 [split] score=0.613 pred=冲突 gt=冲突
+1->1059 实例2 [dirty] score=0.823 pred=一致 gt=冲突
+1->1059 实例3 [sticky] score=0.213 pred=冲突 gt=冲突
+1->1059 实例4 [clean] score=0.721 pred=一致 gt=一致
+36->1024 实例0 [clean] score=0.959 pred=一致 gt=一致
+36->1024 实例1 [split] score=0.670 pred=冲突 gt=冲突
+36->1024 实例2 [dirty] score=0.839 pred=一致 gt=冲突
+36->1024 实例3 [sticky] score=0.238 pred=冲突 gt=冲突
+36->1024 实例4 [clean] score=0.775 pred=一致 gt=一致
+36->1074 实例0 [clean] score=0.957 pred=一致 gt=一致
+36->1074 实例1 [split] score=0.643 pred=冲突 gt=冲突
+36->1074 实例2 [dirty] score=0.825 pred=一致 gt=冲突
+36->1074 实例3 [sticky] score=0.223 pred=冲突 gt=冲突
+36->1074 实例4 [clean] score=0.761 pred=一致 gt=一致

@@ -1,0 +1,7 @@
+﻿scene,frame_a,frame_b,inst_idx,defect,is_conflict,hit_AB,hit_BA,score,score_iou,pred,correct
+000002,153,473,3,sticky,True,0.9729,0.9736,0.9729,0.9729,False,False
+000002,153,473,6,dirty,True,0.0,0.0,0.0,0.0,True,True
+000002,679,804,1,split,True,0.0,0.0,0.0,0.0,True,True
+000002,679,804,3,sticky,True,0.9899,0.9932,0.9899,0.9899,False,False
+000002,679,785,3,sticky,True,0.9854,0.9137,0.9137,0.9854,False,False
+000002,679,785,4,clean,False,0.0,0.0,0.0,0.0,True,False

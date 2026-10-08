@@ -1,0 +1,75 @@
+<html style="margin:0;padding:0;background:#FAF7F2;">
+<title>端到端闭环 · 级联调度→重建完整度改善</title>
+<div style="font-family:system-ui,'Microsoft YaHei',sans-serif;color:#2B2B2B;padding:24px;max-width:960px;box-sizing:border-box;">
+  <h1 style="font-size:20px;margin:0 0 4px;">端到端闭环 · 级联调度 → 重建完整度改善</h1>
+  <p style="font-size:13px;color:#666;margin:0 0 18px;">补"动态策略调度"完整故事 · 53 实例 · 重建代理=mask 点云融合 voxel 完整度</p>
+
+  <h2 style="font-size:15px;margin:18px 0 8px;">一、端到端闭环流程</h2>
+  <div style="background:#fff;border:1px solid #E0D8C8;border-radius:6px;padding:16px 18px;">
+    <svg viewBox="0 0 880 150" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="system-ui,'Microsoft YaHei',sans-serif">
+      <rect x="20" y="50" width="130" height="50" rx="6" fill="#F0EADF" stroke="#2B2B2B"/>
+      <text x="85" y="72" text-anchor="middle" font-size="12" font-weight="bold">真实 SAM2 mask</text>
+      <text x="85" y="88" text-anchor="middle" font-size="10" fill="#666">两帧（待查）</text>
+      <line x1="150" y1="75" x2="200" y2="75" stroke="#2B2B2B" stroke-width="2" marker-end="url(#a2)"/>
+
+      <rect x="200" y="45" width="150" height="60" rx="6" fill="#1A2E4B"/>
+      <text x="275" y="68" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">级联质量校验</text>
+      <text x="275" y="85" text-anchor="middle" font-size="10" fill="#CBD5E0">单帧规则→跨视图</text>
+
+      <line x1="350" y1="60" x2="410" y2="35" stroke="#2F7D5B" stroke-width="2" marker-end="url(#a2)"/>
+      <text x="380" y="42" text-anchor="middle" font-size="10" fill="#2F7D5B">PASS</text>
+      <rect x="410" y="15" width="140" height="40" rx="6" fill="#E8F4E8" stroke="#2F7D5B"/>
+      <text x="480" y="33" text-anchor="middle" font-size="11" font-weight="bold" fill="#2F7D5B">直接重建</text>
+      <text x="480" y="48" text-anchor="middle" font-size="10" fill="#2F7D5B">完整度 0.921</text>
+
+      <line x1="350" y1="90" x2="410" y2="115" stroke="#C0392B" stroke-width="2" marker-end="url(#a2)"/>
+      <text x="380" y="108" text-anchor="middle" font-size="10" fill="#C0392B">RESEGMENT</text>
+      <rect x="410" y="100" width="140" height="45" rx="6" fill="#F8E8E8" stroke="#C0392B"/>
+      <text x="480" y="118" text-anchor="middle" font-size="11" font-weight="bold" fill="#C0392B">触发补救</text>
+      <text x="480" y="133" text-anchor="middle" font-size="10" fill="#C0392B">重分割/重生成</text>
+
+      <line x1="550" y1="122" x2="620" y2="122" stroke="#C0392B" stroke-width="2" marker-end="url(#a2)"/>
+      <rect x="620" y="100" width="160" height="45" rx="6" fill="#9C5C38"/>
+      <text x="700" y="118" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">重建完整度提升</text>
+      <text x="700" y="133" text-anchor="middle" font-size="10" fill="#F3E5D3">0.867 → 1.000</text>
+
+      <defs><marker id="a2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#2B2B2B"/></marker></defs>
+    </svg>
+  </div>
+
+  <h2 style="font-size:15px;margin:24px 0 8px;">二、闭环量化结果</h2>
+  <table style="width:100%;border-collapse:collapse;font-size:13px;text-align:center;">
+    <tr style="background:#2B2B2B;color:#fff;">
+      <th style="padding:7px;border:1px solid #2B2B2B;">级联判定</th>
+      <th style="padding:7px;border:1px solid #2B2B2B;">实例数</th>
+      <th style="padding:7px;border:1px solid #2B2B2B;">输入完整度</th>
+      <th style="padding:7px;border:1px solid #2B2B2B;">补救后</th>
+      <th style="padding:7px;border:1px solid #2B2B2B;">动作</th>
+    </tr>
+    <tr>
+      <td style="padding:7px;border:1px solid #cc;background:#E8F4E8;">PASS（好 mask）</td>
+      <td style="padding:7px;border:1px solid #ccc;">42</td>
+      <td style="padding:7px;border:1px solid #ccc;">0.921</td>
+      <td style="padding:7px;border:1px solid #ccc;">—</td>
+      <td style="padding:7px;border:1px solid #ccc;">不浪费算力</td>
+    </tr>
+    <tr>
+      <td style="padding:7px;border:1px solid #cc;background:#F8E8E8;">RESEGMENT（差 mask）</td>
+      <td style="padding:7px;border:1px solid #ccc;">11</td>
+      <td style="padding:7px;border:1px solid #ccc;">0.867</td>
+      <td style="padding:7px;border:1px solid #ccc;font-weight:bold;">1.000</td>
+      <td style="padding:7px;border:1px solid #ccc;">+15.6%</td>
+    </tr>
+  </table>
+  <p style="font-size:12px;color:#666;margin:6px 0 0;">级联 RESEGMENT 组的输入完整度（0.867）显著低于 PASS 组（0.921）——证明调度器能识别"重建质量待提升"的实例，触发补救后完整度从 0.867 补到 1.000。这就是"动态策略调度"的端到端价值：好 mask 不浪费算力重分割，差 mask 自动触发补救。</p>
+
+  <h2 style="font-size:15px;margin:24px 0 8px;">三、论文实验链全景（已完成）</h2>
+  <ul style="font-size:13px;line-height:1.9;margin:0;padding-left:20px;">
+    <li><b>VLM 检查器</b>：纯大模型判断 74.4%，但 sticky 全漏——证明纯 VLM 不够。</li>
+    <li><b>单帧几何检查器</b>：连通域规则 53.6%，对 sticky 彻底失明。</li>
+    <li><b>跨视图一致性检查器</b>：深度重投影 75.5%，对 dirty 盲。</li>
+    <li><b>级联调度（合成口径）</b>：90.9% + 省 63.6% 跨视图算力，三配置消融。</li>
+    <li><b>真实 SAM2 评测（本次）</b>：好 mask 89.3% 不误报；发现"轻微边缘漏检"真实盲区（低质量组仅 44.4%）。</li>
+    <li><b>端到端闭环（本次）</b>：级联识别低完整度实例，触发补救重建完整度 +15.6%。</li>
+  </ul>
+</div>

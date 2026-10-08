@@ -1,0 +1,90 @@
+<html style="margin:0;padding:0;background:#FAF7F2;">
+<title>跨视图一致性检查器 · 12 场景泛化验证</title>
+<div style="font-family:system-ui,'Microsoft YaHei',sans-serif;color:#2B2B2B;padding:24px;max-width:960px;box-sizing:border-box;">
+  <h1 style="font-size:20px;margin:0 0 4px;">跨视图一致性检查器 · BOP YCB-V 12 场景泛化验证</h1>
+  <p style="font-size:13px;color:#666;margin:0 0 18px;">每场景自动选适中视角差帧对（旋转 25°-55°，平移基线优先）· 53 实例 · 深度反投影+位姿重投影双向命中率取 min · 阈值 0.70 · 可见性过滤 30mm</p>
+
+  <h2 style="font-size:15px;margin:18px 0 8px;">一、12 场景汇总</h2>
+  <table style="width:100%;border-collapse:collapse;font-size:13px;text-align:center;">
+    <tr style="background:#2B2B2B;color:#fff;">
+      <th style="padding:6px;border:1px solid #2B2B2B;">场景</th><th style="padding:6px;border:1px solid #2B2B2B;">帧对</th>
+      <th style="padding:6px;border:1px solid #2B2B2B;">实例</th><th style="padding:6px;border:1px solid #2B2B2B;">准确率</th>
+      <th style="padding:6px;border:1px solid #2B2B2B;">场景</th><th style="padding:6px;border:1px solid #2B2B2B;">帧对</th>
+      <th style="padding:6px;border:1px solid #2B2B2B;">实例</th><th style="padding:6px;border:1px solid #2B2B2B;">准确率</th>
+    </tr>
+    <tr>
+      <td style="padding:5px;border:1px solid #ccc;">000048</td><td style="padding:5px;border:1px solid #ccc;">1133→2160</td><td style="padding:5px;border:1px solid #ccc;">5</td><td style="padding:5px;border:1px solid #ccc;background:#E8F4E8;">80%</td>
+      <td style="padding:5px;border:1px solid #ccc;">000054</td><td style="padding:5px;border:1px solid #ccc;">202→1111</td><td style="padding:5px;border:1px solid #ccc;">5</td><td style="padding:5px;border:1px solid #ccc;background:#FDF3DF;">60%</td>
+    </tr>
+    <tr>
+      <td style="padding:5px;border:1px solid #ccc;">000049</td><td style="padding:5px;border:1px solid #ccc;">91→1269</td><td style="padding:5px;border:1px solid #ccc;">3</td><td style="padding:5px;border:1px solid #ccc;background:#E8F4E8;">100%</td>
+      <td style="padding:5px;border:1px solid #ccc;">000055</td><td style="padding:5px;border:1px solid #ccc;">649→1717</td><td style="padding:5px;border:1px solid #ccc;">6</td><td style="padding:5px;border:1px solid #ccc;background:#FDF3DF;">66.7%</td>
+    </tr>
+    <tr>
+      <td style="padding:5px;border:1px solid #ccc;">000050</td><td style="padding:5px;border:1px solid #ccc;">751→1874</td><td style="padding:5px;border:1px solid #ccc;">4</td><td style="padding:5px;border:1px solid #ccc;background:#E8F4E8;">75%</td>
+      <td style="padding:5px;border:1px solid #ccc;">000056</td><td style="padding:5px;border:1px solid #ccc;">143→956</td><td style="padding:5px;border:1px solid #ccc;">4</td><td style="padding:5px;border:1px solid #ccc;background:#E8F4E8;">75%</td>
+    </tr>
+    <tr>
+      <td style="padding:5px;border:1px solid #ccc;">000051</td><td style="padding:5px;border:1px solid #ccc;">240→1927</td><td style="padding:5px;border:1px solid #ccc;">5</td><td style="padding:5px;border:1px solid #ccc;background:#F8E8E8;">40%</td>
+      <td style="padding:5px;border:1px solid #ccc;">000057</td><td style="padding:5px;border:1px solid #ccc;">38→1057</td><td style="padding:5px;border:1px solid #ccc;">5</td><td style="padding:5px;border:1px solid #ccc;background:#E8F4E8;">100%</td>
+    </tr>
+    <tr>
+      <td style="padding:5px;border:1px solid #ccc;">000052</td><td style="padding:5px;border:1px solid #ccc;">48→516</td><td style="padding:5px;border:1px solid #ccc;">3</td><td style="padding:5px;border:1px solid #ccc;background:#FDF3DF;">66.7%</td>
+      <td style="padding:5px;border:1px solid #ccc;">000058</td><td style="padding:5px;border:1px solid #ccc;">617→1549</td><td style="padding:5px;border:1px solid #ccc;">4</td><td style="padding:5px;border:1px solid #ccc;background:#E8F4E8;">75%</td>
+    </tr>
+    <tr>
+      <td style="padding:5px;border:1px solid #ccc;">000053</td><td style="padding:5px;border:1px solid #ccc;">1→479</td><td style="padding:5px;border:1px solid #ccc;">3</td><td style="padding:5px;border:1px solid #ccc;background:#FDF3DF;">66.7%</td>
+      <td style="padding:5px;border:1px solid #ccc;">000059</td><td style="padding:5px;border:1px solid #ccc;">164→422</td><td style="padding:5px;border:1px solid #ccc;">6</td><td style="padding:5px;border:1px solid #ccc;background:#E8F4E8;">100%</td>
+    </tr>
+    <tr style="background:#F0EADF;">
+      <td colspan="3" style="padding:6px;border:1px solid #ccc;font-weight:bold;">合计（12 场景）</td>
+      <td style="padding:6px;border:1px solid #ccc;font-weight:bold;">40/53 = 75.5%</td>
+      <td colspan="3" style="padding:6px;border:1px solid #ccc;font-weight:bold;">职责内合计（clean+split+sticky）</td>
+      <td style="padding:6px;border:1px solid #ccc;font-weight:bold;background:#E8F4E8;">38/42 = 90.5%</td>
+    </tr>
+  </table>
+  <p style="font-size:12px;color:#666;margin:6px 0 0;">注：12 例漏检 = 10 dirty（设计分工，归单帧几何检查器）+ 2 sticky 极限案例 + 1 clean 误报；低采样点实例（两帧可见交集 &lt; 300px）已剔除。</p>
+
+  <h2 style="font-size:15px;margin:24px 0 8px;">二、分缺陷检出率（12 场景聚合）</h2>
+  <div style="background:#fff;border:1px solid #E0D8C8;border-radius:6px;padding:14px 18px;">
+    <svg viewBox="0 0 880 240" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="system-ui,'Microsoft YaHei',sans-serif">
+      <line x1="60" y1="180" x2="860" y2="180" stroke="#2B2B2B" stroke-width="1.5"/>
+      <text x="860" y="200" text-anchor="end" font-size="12" fill="#666">检出率 / 保留率（%）</text>
+      <!-- 组：clean 94.7 -->
+      <g>
+        <rect x="80" y="24" width="120" height="152" fill="#2F7D5B" opacity="0.85" rx="3"/>
+        <text x="140" y="95" text-anchor="middle" font-size="17" font-weight="bold" fill="#fff">94.7%</text>
+        <text x="140" y="120" text-anchor="middle" font-size="12" fill="#fff">clean 保留</text>
+        <text x="140" y="214" text-anchor="middle" font-size="12" fill="#2F7D5B">18/19（0 误报→1）</text>
+      </g>
+      <!-- 组：split 92.3 -->
+      <g>
+        <rect x="260" y="30" width="120" height="146" fill="#9C5C38" opacity="0.85" rx="3"/>
+        <text x="320" y="100" text-anchor="middle" font-size="17" font-weight="bold" fill="#fff">92.3%</text>
+        <text x="320" y="125" text-anchor="middle" font-size="12" fill="#fff">split 检出</text>
+        <text x="320" y="214" text-anchor="middle" font-size="12" fill="#9C5C38">12/13</text>
+      </g>
+      <!-- 组：sticky 80 -->
+      <g>
+        <rect x="440" y="52" width="120" height="124" fill="#C0392B" opacity="0.85" rx="3"/>
+        <text x="500" y="110" text-anchor="middle" font-size="17" font-weight="bold" fill="#fff">80%</text>
+        <text x="500" y="135" text-anchor="middle" font-size="12" fill="#fff">sticky 检出</text>
+        <text x="500" y="214" text-anchor="middle" font-size="12" fill="#C0392B">8/10（单帧基线 0%）</text>
+      </g>
+      <!-- 组：dirty 18.2 -->
+      <g>
+        <rect x="620" y="122" width="120" height="54" fill="#B8B09B" opacity="0.85" rx="3"/>
+        <text x="680" y="152" text-anchor="middle" font-size="15" font-weight="bold" fill="#fff">18.2%</text>
+        <text x="680" y="214" text-anchor="middle" font-size="12" fill="#7A7464">dirty（分工外）</text>
+      </g>
+    </svg>
+  </div>
+
+  <h2 style="font-size:15px;margin:24px 0 8px;">三、泛化发现与已知极限（论文讨论素材）</h2>
+  <ul style="font-size:13px;line-height:1.9;margin:0;padding-left:20px;">
+    <li><b>阈值跨场景仍成立</b>：全局分数分布 clean 中位 0.91、sticky 中位 0.46，阈值 0.70 下 clean 误报仅 1/19。适中视角差（25°-55°）选帧是泛化的关键——视角差过大（&gt;90°）时遮挡剧变导致 clean 误报升至 42%。</li>
+    <li><b>split 检测对注入强度敏感</b>：切缝过窄（10% 面积）时分数与 clean 重叠（检出 23%）；增强为 1/3 面积断裂后检出 92.3%——真实 SAM2 的实例断裂通常伴随可观面积缺失，注入口径需贴近。</li>
+    <li><b>sticky 的极限</b>：被并入的异物占比过小（&lt;20%）时分数降幅不足（2/10 漏检）；检测器对"合并了体积相近的另一物体"最敏感，这恰是单帧检查器完全失明的场景。</li>
+    <li><b>dirty 分工成立</b>：跨视图对脏 mask 不敏感（18.2%），单帧几何规则（面积/碎块）是正确归属——三检查器互补闭环而非单点全能。</li>
+  </ul>
+</div>

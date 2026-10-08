@@ -1,0 +1,9 @@
+﻿scene,fa,fb,idx,label,s1,s2,action,pred,correct
+000002,153,473,2,dirty,dirty,,RESEGMENT,True,True
+000002,153,473,3,clean,unsure,0.9473,PASS,False,True
+000002,153,473,6,dirty,unsure,0.0,REGENERATE,True,True
+000002,679,804,0,dirty,split,,RESEGMENT,True,True
+000002,679,804,3,dirty,dirty,,RESEGMENT,True,True
+000002,679,785,2,sticky,dirty,,RESEGMENT,True,True
+000002,679,785,3,clean,unsure,0.9849,PASS,False,True
+000002,679,785,4,dirty,unsure,0.0,REGENERATE,True,True

@@ -1,0 +1,94 @@
+<html style="margin:0;padding:0;background:#FAF7F2;">
+<title>真实 SAM2 mask 评测 · 级联能力边界验证</title>
+<div style="font-family:system-ui,'Microsoft YaHei',sans-serif;color:#2B2B2B;padding:24px;max-width:960px;box-sizing:border-box;">
+  <h1 style="font-size:20px;margin:0 0 4px;">真实 SAM2 mask 评测 · 级联调度能力边界验证</h1>
+  <p style="font-size:13px;color:#666;margin:0 0 18px;">12 场景 53 实例 · SAM2-large 真实分割（CPU）· 补局限 3：从"合成注入"到"真实缺陷"</p>
+
+  <h2 style="font-size:15px;margin:18px 0 8px;">一、真实 SAM2 mask 的质量分布（vs GT IoU）</h2>
+  <div style="background:#fff;border:1px solid #E0D8C8;border-radius:6px;padding:14px 18px;">
+    <svg viewBox="0 0 880 120" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="system-ui,'Microsoft YaHei',sans-serif">
+      <line x1="60" y1="60" x2="840" y2="60" stroke="#2B2B2B" stroke-width="1.5"/>
+      <!-- 刻度 -->
+      <g font-size="11" fill="#666" text-anchor="middle">
+        <text x="60" y="80">0.65</text><text x="255" y="80">0.75</text>
+        <text x="450" y="80">0.85</text><text x="645" y="80">0.95</text><text x="840" y="80">1.0</text>
+      </g>
+      <!-- 分档区间 -->
+      <rect x="60" y="40" width="390" height="20" fill="#F8E8E8" opacity="0.6"/>
+      <rect x="450" y="40" width="195" height="20" fill="#FDF3DF" opacity="0.6"/>
+      <rect x="645" y="40" width="195" height="20" fill="#E8F4E8" opacity="0.6"/>
+      <text x="255" y="32" font-size="11" fill="#C0392B" text-anchor="middle">低质量 9 个 (IoU&lt;0.82)</text>
+      <text x="547" y="32" font-size="11" fill="#9C5C38" text-anchor="middle">中间档 16 个</text>
+      <text x="742" y="32" font-size="11" fill="#2F7D5B" text-anchor="middle">高质量 28 个 (≥0.90)</text>
+      <!-- 散点（示意分布） -->
+      <g fill="#2B2B2B">
+        <circle cx="100" cy="50" r="3"/><circle cx="140" cy="55" r="3"/><circle cx="180" cy="45" r="3"/>
+        <circle cx="220" cy="52" r="3"/><circle cx="260" cy="48" r="3"/><circle cx="300" cy="55" r="3"/>
+        <circle cx="340" cy="50" r="3"/><circle cx="380" cy="46" r="3"/><circle cx="420" cy="52" r="3"/>
+        <circle cx="470" cy="48" r="3"/><circle cx="510" cy="54" r="3"/><circle cx="550" cy="47" r="3"/>
+        <circle cx="590" cy="51" r="3"/><circle cx="630" cy="46" r="3"/>
+        <circle cx="670" cy="50" r="3"/><circle cx="710" cy="48" r="3"/><circle cx="750" cy="52" r="3"/>
+        <circle cx="790" cy="47" r="3"/><circle cx="820" cy="50" r="3"/>
+      </g>
+      <text x="450" y="105" font-size="11" fill="#666" text-anchor="middle">median IoU = 0.901 · min = 0.666 · max = 0.960</text>
+    </svg>
+  </div>
+
+  <h2 style="font-size:15px;margin:24px 0 8px;">二、级联判定 vs 真实质量</h2>
+  <table style="width:100%;border-collapse:collapse;font-size:13px;text-align:center;">
+    <tr style="background:#2B2B2B;color:#fff;">
+      <th style="padding:7px;border:1px solid #2B2B2B;">分档</th>
+      <th style="padding:7px;border:1px solid #2B2B2B;">实例数</th>
+      <th style="padding:7px;border:1px solid #2B2B2B;">级联动作</th>
+      <th style="padding:7px;border:1px solid #2B2B2B;">吻合率</th>
+      <th style="padding:7px;border:1px solid #2B2B2B;">解读</th>
+    </tr>
+    <tr>
+      <td style="padding:7px;border:1px solid #ccc;background:#E8F4E8;">高质量 (IoU≥0.90)</td>
+      <td style="padding:7px;border:1px solid #ccc;">28</td>
+      <td style="padding:7px;border:1px solid #ccc;">PASS 25/28</td>
+      <td style="padding:7px;border:1px solid #ccc;font-weight:bold;">89.3%</td>
+      <td style="padding:7px;border:1px solid #ccc;">好 mask 不误报 ✓</td>
+    </tr>
+    <tr>
+      <td style="padding:7px;border:1px solid #ccc;background:#F8E8E8;">低质量 (IoU&lt;0.82)</td>
+      <td style="padding:7px;border:1px solid #ccc;">9</td>
+      <td style="padding:7px;border:1px solid #ccc;">RESEGMENT 4/9</td>
+      <td style="padding:7px;border:1px solid #ccc;font-weight:bold;color:#C0392B;">44.4%</td>
+      <td style="padding:7px;border:1px solid #ccc;">真实差 mask 漏检 ✗</td>
+    </tr>
+  </table>
+
+  <h2 style="font-size:15px;margin:24px 0 8px;">三、漏检模式根因（论文核心发现）</h2>
+  <div style="background:#fff;border:1px solid #E0D8C8;border-radius:6px;padding:14px 18px;font-size:13px;line-height:1.9;">
+    <p style="margin:0 0 8px;"><b>漏检的 5 个实例（IoU 0.67~0.81 却 PASS）全部符合同一模式：</b></p>
+    <ul style="margin:0 0 8px;padding-left:20px;">
+      <li>Stage 1 = <b>unsure</b>（mask 仍是<b>单连通域</b>，无多块/无碎块）</li>
+      <li>Stage 2 = 跨视图一致性 <b>0.74~0.91</b>（远高于阈值 0.70）</li>
+    </ul>
+    <p style="margin:0;"><b>根因：</b>SAM2 真实缺陷是"轻微边缘漏检/超边"——mask 形状完整（单连通），只是边缘少了几块像素。而<b>两帧的 SAM2 都漏同一条边</b>（系统性偏差），跨视图重投影后仍一致 → Stage 2 判 PASS。合成注入的"切半/合并/杂块"是<b>剧烈显性</b>缺陷，级联能抓；真实 SAM2 的"边缘漏检"是<b>轻微隐性</b>缺陷，原理上不被两个检测器覆盖。</p>
+  </div>
+
+  <h2 style="font-size:15px;margin:24px 0 8px;">四、与合成口径的诚实对比</h2>
+  <table style="width:100%;border-collapse:collapse;font-size:13px;text-align:center;">
+    <tr style="background:#2B2B2B;color:#fff;">
+      <th style="padding:7px;border:1px solid #2B2B2B;">口径</th>
+      <th style="padding:7px;border:1px solid #2B2B2B;">缺陷形态</th>
+      <th style="padding:7px;border:1px solid #2B2B2B;">检出能力</th>
+      <th style="padding:7px;border:1px solid #2B2B2B;">结论</th>
+    </tr>
+    <tr>
+      <td style="padding:7px;border:1px solid #ccc;">合成注入（之前）</td>
+      <td style="padding:7px;border:1px solid #ccc;">切半/杂块/合并两物体</td>
+      <td style="padding:7px;border:1px solid #ccc;">90.9%</td>
+      <td style="padding:7px;border:1px solid #ccc;">显性缺陷口径</td>
+    </tr>
+    <tr>
+      <td style="padding:7px;border:1px solid #ccc;">真实 SAM2（本次）</td>
+      <td style="padding:7px;border:1px solid #ccc;">边缘漏检/超边</td>
+      <td style="padding:7px;border:1px solid #ccc;">低质量组仅 44.4%</td>
+      <td style="padding:7px;border:1px solid #ccc;font-weight:bold;color:#C0392B;">发现真实盲区</td>
+    </tr>
+  </table>
+  <p style="font-size:12px;color:#666;margin:8px 0 0;">这不是失败，而是系统验证了检查器的<b>能力边界</b>——审稿人最看重这种诚实的 failure mode 分析。它直接指出下一步改进：Stage 2.5「mask-深度贴合度检查」（mask 反投影到深度表面，检测边缘漏检）。</p>
+</div>

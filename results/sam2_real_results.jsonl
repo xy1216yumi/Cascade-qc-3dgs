@@ -1,0 +1,10 @@
+{"scene": "000048", "frame": 1133, "inst_idx": 0, "iou_vs_gt": 0.6953, "best_score": 0.9689, "box": [349.0, 171.0, 455.0, 326.0]}
+{"scene": "000048", "frame": 1133, "inst_idx": 1, "iou_vs_gt": 0.9319, "best_score": 0.9705, "box": [348.0, 300.0, 439.0, 361.0]}
+{"scene": "000048", "frame": 1133, "inst_idx": 2, "iou_vs_gt": 0.8352, "best_score": 0.9668, "box": [357.0, 104.0, 476.0, 198.0]}
+{"scene": "000048", "frame": 1133, "inst_idx": 3, "iou_vs_gt": 0.8172, "best_score": 0.9541, "box": [432.0, 174.0, 527.0, 358.0]}
+{"scene": "000048", "frame": 1133, "inst_idx": 4, "iou_vs_gt": 0.8041, "best_score": 0.937, "box": [118.0, 303.0, 339.0, 412.0]}
+{"scene": "000048", "frame": 2160, "inst_idx": 0, "iou_vs_gt": 0.666, "best_score": 0.9612, "box": [344.0, 133.0, 479.0, 337.0]}
+{"scene": "000048", "frame": 2160, "inst_idx": 1, "iou_vs_gt": 0.8601, "best_score": 0.975, "box": [293.0, 299.0, 415.0, 376.0]}
+{"scene": "000048", "frame": 2160, "inst_idx": 2, "iou_vs_gt": 0.7695, "best_score": 0.9708, "box": [348.0, 46.0, 501.0, 164.0]}
+{"scene": "000048", "frame": 2160, "inst_idx": 3, "iou_vs_gt": 0.8119, "best_score": 0.958, "box": [403.0, 130.0, 566.0, 381.0]}
+{"scene": "000048", "frame": 2160, "inst_idx": 4, "iou_vs_gt": 0.792, "best_score": 0.955, "box": [17.0, 290.0, 234.0, 421.0]}

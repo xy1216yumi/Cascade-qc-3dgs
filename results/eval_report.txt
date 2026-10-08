@@ -1,0 +1,33 @@
+============================================================
+VLM 检查器准确率评估报告
+============================================================
+参与统计实例数: 23
+实例级完全一致率 (三布尔全对): 9/23 = 39.1%
+
+各属性一致率:
+    is_clean: 11/23 = 47.8%
+    is_split: 17/23 = 73.9%
+   is_sticky: 18/23 = 78.3%
+
+漏检实例数: 5（模型未输出、人工补列的实例）
+  - real_images\000048_000001.png 实例4 (人工: {'is_clean': False, 'is_split': False, 'is_sticky': True})
+  - real_images\000048_000036.png 实例4 (人工: {'is_clean': False, 'is_split': False, 'is_sticky': True})
+  - real_images\000049_000001.png 实例3 (人工: {'is_clean': False, 'is_split': False, 'is_sticky': True})
+  - real_images\000049_000036.png 实例3 (人工: {'is_clean': False, 'is_split': False, 'is_sticky': True})
+  - real_images\000051_000001.png 实例4 (人工: {'is_clean': False, 'is_split': False, 'is_sticky': True})
+
+错误明细（共 14 条，最多显示 30 条）:
+  - real_images\000048_000001.png 实例2: 人工={'is_clean': False, 'is_split': True, 'is_sticky': False} 预测={'is_clean': True, 'is_split': False, 'is_sticky': False} | 模型理由: 单个罐子，边界基本贴合
+  - real_images\000048_000001.png 实例3: 人工={'is_clean': False, 'is_split': False, 'is_sticky': False} 预测={'is_clean': True, 'is_split': False, 'is_sticky': False} | 模型理由: 单个杯子含把手，轮廓贴合
+  - real_images\000048_000036.png 实例2: 人工={'is_clean': False, 'is_split': True, 'is_sticky': False} 预测={'is_clean': True, 'is_split': False, 'is_sticky': False} | 模型理由: 覆盖单个圆罐，遮挡下仍连通
+  - real_images\000048_000036.png 实例3: 人工={'is_clean': False, 'is_split': False, 'is_sticky': False} 预测={'is_clean': True, 'is_split': False, 'is_sticky': False} | 模型理由: 单个杯子，主体连通贴合
+  - real_images\000049_000001.png 实例2: 人工={'is_clean': False, 'is_split': True, 'is_sticky': False} 预测={'is_clean': False, 'is_split': False, 'is_sticky': False} | 模型理由: 圆形mask比圆盘物体大一圈，边界不贴合
+  - real_images\000049_000001.png 实例4: 人工={'is_clean': False, 'is_split': False, 'is_sticky': True} 预测={'is_clean': True, 'is_split': False, 'is_sticky': False} | 模型理由: 粉色mask覆盖后方单个盒子，边界贴合
+  - real_images\000049_000036.png 实例1: 人工={'is_clean': True, 'is_split': False, 'is_sticky': False} 预测={'is_clean': False, 'is_split': False, 'is_sticky': True} | 模型理由: 色块盖住方盒和圆盘两个物体
+  - real_images\000049_000036.png 实例2: 人工={'is_clean': False, 'is_split': True, 'is_sticky': False} 预测={'is_clean': True, 'is_split': False, 'is_sticky': False} | 模型理由: 单个圆盘主体连通贴合
+  - real_images\000049_000036.png 实例4: 人工={'is_clean': False, 'is_split': False, 'is_sticky': True} 预测={'is_clean': True, 'is_split': False, 'is_sticky': False} | 模型理由: 单个糖盒边界贴合
+  - real_images\000051_000001.png 实例2: 人工={'is_clean': False, 'is_split': True, 'is_sticky': False} 预测={'is_clean': True, 'is_split': False, 'is_sticky': False} | 模型理由: 黄色块主体覆盖单个糖盒，基本连通
+  - real_images\000051_000001.png 实例3: 人工={'is_clean': False, 'is_split': False, 'is_sticky': False} 预测={'is_clean': True, 'is_split': False, 'is_sticky': False} | 模型理由: 蓝色块贴合单个杯子，边界吻合
+  - real_images\000051_000035.png 实例2: 人工={'is_clean': False, 'is_split': True, 'is_sticky': False} 预测={'is_clean': True, 'is_split': False, 'is_sticky': False} | 模型理由: 单盒主体连通基本贴合
+  - real_images\000051_000035.png 实例4: 人工={'is_clean': False, 'is_split': False, 'is_sticky': True} 预测={'is_clean': True, 'is_split': False, 'is_sticky': False} | 模型理由: 单杯主体连通边界贴合
+  - real_images\000051_000035.png 实例5: 人工={'is_clean': False, 'is_split': False, 'is_sticky': True} 预测={'is_clean': False, 'is_split': False, 'is_sticky': False} | 模型理由: 似与2同盒且仅覆盖局部
